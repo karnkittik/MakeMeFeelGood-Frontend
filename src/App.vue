@@ -1,81 +1,35 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <a-layout class="my-element">
+    <NavigationBar />
+    <a-layout-content>
+      <div class="my-pane">
+        <message-pane type="top" :messages="[1, 2, 3, 4, 5]" />
+        <message-pane :messages="[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]" />
+      </div>
+    </a-layout-content>
+    <CreateModal />
+    <a-layout-footer style="text-align: center">
+      MakeMeFeelGood ©2022
+    </a-layout-footer>
+  </a-layout>
 </template>
 
+<script setup>
+import NavigationBar from "./components/NavigationBar.vue";
+import MessagePane from "./components/MessagePane.vue";
+import MessageCard from "./components/MessageCard.vue";
+import CreateModal from "./components/CreateModal.vue";
+</script>
+
 <style>
-@import './assets/base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+.my-element {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
 }
-
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.my-pane {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0px auto;
+  padding: 30px min(10vw, 30px);
 }
 </style>
