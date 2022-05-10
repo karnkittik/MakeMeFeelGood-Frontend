@@ -84,6 +84,7 @@ import {
   PlayCircleOutlined,
   PlayCircleFilled,
 } from "@ant-design/icons-vue";
+import config from "../config";
 export default {
   props: {
     message: {
@@ -122,10 +123,21 @@ export default {
   },
   methods: {
     upvote() {
-      this.upvoted = true;
+      this.axios
+        .patch(config.API + `/upvote/${this.message.id}`)
+        .then((response) => {
+          this.upvoted = true;
+          this.message.upvote += 1;
+        })
+        .catch((error) => console.log(error));
     },
     report() {
-      this.reported = true;
+      this.axios
+        .patch(config.API + `/report/${this.message.id}`)
+        .then((response) => {
+          this.reported = true;
+        })
+        .catch((error) => console.log(error));
     },
     playThisMessage() {
       this.playThisOnly(this.messageIndex);

@@ -61,9 +61,16 @@
 import MessageCard from "./MessageCard.vue";
 export default {
   components: { MessageCard },
+  props: {
+    messages: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
-      messages: [],
       currentTrack: null,
     };
   },
@@ -104,7 +111,7 @@ export default {
 
 @media screen and (max-width: 768px) {
   .normal-message {
-    aspect-ratio: 2 / 1 !important;
+    aspect-ratio: 4 / 3 !important;
   }
 }
 
