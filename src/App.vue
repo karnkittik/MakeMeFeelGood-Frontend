@@ -1,10 +1,9 @@
 <template>
   <a-layout class="my-element">
     <NavigationBar />
-    <a-layout-content>
-      <div class="my-pane">
-        <MessagePane :messages="messages" />
-      </div>
+    <a-layout-content class="my-pane">
+      <a-spin v-show="loading" class="my-loading" />
+      <MessagePane :messages="messages" />
     </a-layout-content>
     <CreateModal />
     <a-layout-footer style="text-align: center">
@@ -24,6 +23,7 @@ export default {
   data() {
     return {
       messages: [],
+      loading: true,
     };
   },
   methods: {
@@ -32,6 +32,7 @@ export default {
         .get(config.API + "/1652109817000")
         .then((response) => {
           this.messages = response.data;
+          this.loading = false;
         })
         .catch((error) => console.log(error));
     },
@@ -52,5 +53,9 @@ export default {
   max-width: 1600px;
   margin: 0px auto;
   padding: 30px min(10vw, 30px);
+  text-align: center;
+}
+.my-loading {
+  margin: 20vh !important;
 }
 </style>

@@ -111,13 +111,18 @@ export default {
 
 @media screen and (max-width: 768px) {
   .normal-message {
+    aspect-ratio: 2 / 1 !important;
+  }
+  .rectangle {
+    aspect-ratio: 2 / 1 !important;
+  }
+  .top-message {
     aspect-ratio: 4 / 3 !important;
   }
 }
-
 @media screen and (max-width: 992px) {
   .rectangle {
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: 1 / 1;
   }
 }
 </style>
