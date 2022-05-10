@@ -3,8 +3,7 @@
     <NavigationBar />
     <a-layout-content>
       <div class="my-pane">
-        <message-pane type="top" :messages="[1, 2, 3, 4, 5]" />
-        <message-pane :messages="[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]" />
+        <MessagePane />
       </div>
     </a-layout-content>
     <CreateModal />
