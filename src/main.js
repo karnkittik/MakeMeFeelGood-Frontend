@@ -15,6 +15,6 @@ window.addEventListener("resize", () => {
 });
 
 const app = createApp(App).use(Antd);
-app.use(VueAxios, axios)
+app.use(VueAxios, axios);
 app.directive("ResizeText", VueResizeText.ResizeText);
 app.mount("#app");

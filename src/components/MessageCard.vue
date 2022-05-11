@@ -149,7 +149,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 .my-card {
   padding: 5px;
   width: 100%;
@@ -183,7 +183,8 @@ export default {
 .card-message {
   padding: 0 20px;
   width: 100%;
-  overflow: scroll;
+  overflow: hidden;
+  overflow-y: auto;
   color: black !important;
   text-align: center;
   font-family: inherit;
@@ -201,5 +202,30 @@ export default {
 .fade-enter, .fade-leave-to
 /* .component-fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+/* width */
+.card-message::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.card-message::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.card-message::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+.card-message::-webkit-scrollbar-thumb:hover {
+  background: gray; 
+}
+
+.card-message:hover {
+  &::-webkit-scrollbar-thumb{
+    background: gray; 
+  }
 }
 </style>
