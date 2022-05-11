@@ -33,7 +33,6 @@
                   :ref="`message-${messageIndex + 1}`"
                   :play-this-only="playThisOnly"
                   :message-index="messageIndex + 1"
-                  type="top"
                 />
               </div>
             </a-col>

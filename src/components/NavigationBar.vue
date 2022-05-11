@@ -1,58 +1,73 @@
 <template>
-  <a-layout-header>
-    <a-layout-content>
-      <a-row>
-        <a-col :span="12" align="start">
-          <a-button class="calendar-button" type="primary" shape="circle" v-on:click="onClick">
-            <template #icon>
-              <CalendarOutlined />
-            </template>
-          </a-button>
-          <a-typography-text :style="{color: '#ffffff', padding: '8px'}"> {{ formatDate }} </a-typography-text>
-          <a-calendar :class="showCalendar ? 'show-calendar' : 'hide-calendar'" v-model:value="date" :fullscreen="false" :disabled-date="disabledDate" @select="onSelect"/>
-        </a-col>
-        <a-col :span="12" align="end">
-          <a-typography-text :style="{color: '#ffffff', padding: '8px'}"> MakeMeFeelGood </a-typography-text>
-        </a-col>
-      </a-row>
-    </a-layout-content>
+  <a-layout-header class="my-header">
+    <div class="my-date">
+      <a-popover
+        placement="bottomLeft"
+        trigger="click"
+        v-model:visible="showCalendar"
+      >
+        <template #content>
+          <div class="my-date-picker-block">
+            <a-calendar
+              v-if="showCalendar"
+              v-model:value="date"
+              :fullscreen="false"
+              :disabled-date="disabledDate"
+              @select="onClick"
+            />
+          </div>
+        </template>
+        <a-button
+          class="calendar-button"
+          type="ghost"
+          shape="circle"
+          @click="onClick"
+        >
+          <template #icon>
+            <CalendarOutlined style="font-size: 20px" />
+          </template>
+        </a-button>
+      </a-popover>
+      <a-typography-title :level="3" class="my-text">
+        {{ formatDate }}
+      </a-typography-title>
+    </div>
+    <a-typography-title :level="3" class="my-text">
+      MakeMeFeelGood
+    </a-typography-title>
   </a-layout-header>
 </template>
 <script>
-import dayjs from 'dayjs';
-import moment from 'moment';
-import isToday from 'dayjs/plugin/isToday';
-import isYesterday from 'dayjs/plugin/isYesterday';
-dayjs.extend(isToday)
-dayjs.extend(isYesterday)
-import { CalendarOutlined } from '@ant-design/icons-vue';
-import { defineComponent, ref, computed } from 'vue';
+import dayjs from "dayjs";
+import moment from "moment";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
+import { CalendarOutlined } from "@ant-design/icons-vue";
+import { defineComponent, ref, computed } from "vue";
 export default defineComponent({
   setup() {
     const date = ref(dayjs());
     const showCalendar = ref(false);
-    
-    const formatDate = computed(() => {
-      if (date.value.isToday()){
-        return "Today"
-      } else if (date.value.isYesterday()){
-        return "Yesterday"
-      } else {
-        return date.value.format('DD/MMM/YYYY')
-      }
-    })
 
-    const disabledDate = current => {
+    const formatDate = computed(() => {
+      if (date.value.isToday()) {
+        return "Today";
+      } else if (date.value.isYesterday()) {
+        return "Yesterday";
+      } else {
+        return date.value.format("MMM D, YYYY");
+      }
+    });
+
+    const disabledDate = (current) => {
       // Can not select days after today
-      return current > moment().endOf('day');
+      return current > moment().endOf("day");
     };
 
     const onClick = () => {
-      showCalendar.value = !showCalendar.value
-      // console.log(showCalendar.value);
-    }
-
-    const onSelect = () => {
+      showCalendar.value = !showCalendar.value;
       console.log(date.value.toString());
     };
 
@@ -62,31 +77,38 @@ export default defineComponent({
       showCalendar,
       disabledDate,
       onClick,
-      onSelect
     };
   },
   components: {
-    CalendarOutlined
-  }
+    CalendarOutlined,
+  },
 });
 </script>
 <style>
-.show-calendar {
-  visibility: visible;
-  width: 100%;
+.my-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 36px 30px !important;
+  background: #f0f2f5 !important;
 }
-.hide-calendar {
-  width: 0px !important;
-  height: 0px !important;
-  visibility: hidden;
+.my-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-text {
+  color: black !important;
+  margin: 0 !important;
+  margin-left: 10px !important;
+}
+.my-date-picker-block {
+  width: 300px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
 }
 .calendar-button {
   width: 48px !important;
   height: 48px !important;
-}
-@media screen and (max-width: 768px) {
-  .show-calendar {
-    width: 200%;
-  }
 }
 </style>

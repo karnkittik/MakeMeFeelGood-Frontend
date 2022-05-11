@@ -137,18 +137,19 @@ body {
   margin: 20vh !important;
 }
 /* width */
-::-webkit-scrollbar {
-  width: 10px;
+body::-webkit-scrollbar {
+  width: 8px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
-  border-radius: 10px;
+body::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background: #f0f2f5;
 }
- 
+
 /* Handle */
-::-webkit-scrollbar-thumb {
-  background: gray; 
-  border-radius: 10px;
+body::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 8px;
 }
 </style>

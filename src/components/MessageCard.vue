@@ -2,35 +2,42 @@
   <!-- <div :class="`card card-${Math.floor(Math.random() * 4) + 1}`"> -->
   <div :class="`my-card card`">
     <div class="card-top-action-block">
-      <a-tooltip
-        title="Report this message"
-        v-if="!reported"
-        color="grey"
-        placement="bottom"
+      <span style="color: grey">Report</span>
+      <a-button v-if="!reported" type="text" shape="circle" @click="report()">
+        <template #icon>
+          <exclamation-circle-outlined style="font-size: large; color: grey" />
+        </template>
+      </a-button>
+      <a-button
+        v-else
+        type="text"
+        shape="circle"
+        disabled
+        style="cursor: default !important"
       >
-        <a-button type="text" shape="circle" @click="report()">
-          <template #icon>
-            <exclamation-circle-outlined
-              style="font-size: large; color: grey"
-            />
-          </template>
-        </a-button>
-      </a-tooltip>
-      <a-tooltip v-else title="Reported" color="grey" placement="bottom">
-        <a-button type="text" shape="circle" disabled>
-          <template #icon>
-            <exclamation-circle-filled
-              style="font-size: large; color: #be3f5f"
-            />
-          </template>
-        </a-button>
-      </a-tooltip>
+        <template #icon>
+          <exclamation-circle-filled style="font-size: large; color: #be3f5f" />
+        </template>
+      </a-button>
     </div>
     <a-typography-paragraph
-      :ellipsis="{ rows: 4, expandable: true, symbol: '↩' }"
+      v-if="type == 'top'"
+      :ellipsis="{ rows: 3, expandable: true, symbol: '↩' }"
       :content="message.text"
       v-resize-text="{
-        ratio: 20,
+        ratio: 1.1,
+        minFontSize: '16px',
+        maxFontSize: '48px',
+        delay: 100,
+      }"
+      class="card-message"
+    />
+    <a-typography-paragraph
+      v-else
+      :ellipsis="{ rows: 3, expandable: true, symbol: '↩' }"
+      :content="message.text"
+      v-resize-text="{
+        ratio: 1.5,
         minFontSize: '16px',
         maxFontSize: '48px',
         delay: 100,
@@ -41,38 +48,45 @@
       <audio ref="player" @ended="playing = false">
         <source :src="message.url" type="audio/mpeg" />
       </audio>
-      <a-button type="text" shape="circle" @click="playThisMessage">
-        <template #icon>
-          <play-circle-outlined
-            v-if="!playing"
-            style="font-size: large; color: grey"
-          />
-          <play-circle-filled v-else style="font-size: large; color: #9b54bd" />
-        </template>
-      </a-button>
-      <slot name="audio"></slot>
+      <div>
+        <a-button
+          type="text"
+          shape="circle"
+          @click="playThisMessage"
+          style="cursor: default !important"
+        >
+          <template #icon>
+            <play-circle-outlined
+              v-if="!playing"
+              style="font-size: large; color: grey"
+            />
+            <play-circle-filled
+              v-else
+              style="font-size: large; color: #9b54bd"
+            />
+          </template>
+        </a-button>
+        <span style="color: grey">Play</span>
+      </div>
       <div>
         <span style="color: grey">{{ message.upvote }}</span>
-        <a-tooltip
-          title="Upvote this message"
-          v-if="!upvoted"
-          color="grey"
-          placement="bottom"
+        <a-button v-if="!upvoted" type="text" shape="circle" @click="upvote()">
+          <template #icon>
+            <arrow-up-outlined style="font-size: large; color: grey" />
+          </template>
+        </a-button>
+        <a-button
+          v-else
+          title="Upvoted!"
+          type="text"
+          shape="circle"
+          disabled
+          style="cursor: default !important"
         >
-          <a-button type="text" shape="circle" @click="upvote()">
-            <template #icon>
-              <arrow-up-outlined style="font-size: large; color: grey" />
-            </template>
-          </a-button>
-        </a-tooltip>
-        <a-tooltip v-else title="Upvoted!" color="grey" placement="bottom">
-          <a-button type="text" shape="circle" disabled>
-            <template #icon>
-              <up-circle-filled
-                style="font-size: large; color: #3cb51b"
-              /> </template
-          ></a-button>
-        </a-tooltip>
+          <template #icon>
+            <up-circle-filled style="font-size: large; color: #3cb51b" />
+          </template>
+        </a-button>
       </div>
     </div>
   </div>
@@ -125,19 +139,18 @@ export default {
   },
   methods: {
     upvote() {
+      this.upvoted = true;
+      this.message.upvote += 1;
       this.axios
         .patch(config.API + `/upvote/${this.message.id}`)
-        .then((response) => {
-          this.upvoted = true;
-          this.message.upvote += 1;
-        })
+        .then((response) => {})
         .catch((error) => console.log(error));
     },
     report() {
+      this.reported = true;
       this.axios
         .patch(config.API + `/report/${this.message.id}`)
         .then((response) => {
-          this.reported = true;
           console.log(this.reported);
         })
         .catch((error) => console.log(error));
@@ -165,7 +178,7 @@ export default {
 
 .card:hover {
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-  transform: scale(1.02);
+  transform: scale(0.98);
 }
 
 .card-top-action-block {
@@ -212,7 +225,7 @@ export default {
 .card-message::-webkit-scrollbar-track {
   border-radius: 8px;
 }
- 
+
 /* Handle */
 .card-message::-webkit-scrollbar-thumb {
   border-radius: 8px;
@@ -220,12 +233,12 @@ export default {
 
 /* Handle on hover */
 .card-message::-webkit-scrollbar-thumb:hover {
-  background: gray; 
+  background: gray;
 }
 
 .card-message:hover {
-  &::-webkit-scrollbar-thumb{
-    background: gray; 
+  &::-webkit-scrollbar-thumb {
+    background: gray;
   }
 }
 </style>
