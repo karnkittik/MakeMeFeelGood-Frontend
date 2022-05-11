@@ -177,7 +177,7 @@ export default {
 
 .card:hover {
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .card-top-action-block {

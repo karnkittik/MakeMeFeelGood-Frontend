@@ -1,6 +1,7 @@
 <template>
   <a-layout class="my-element">
     <NavigationBar class="nav-bar" />
+    <div style="height: 80px"></div>
     <a-layout-content class="my-pane">
       <a-spin v-if="loading" class="my-loading" />
       <MessagePane v-if="!loading" :messages="messages" />
@@ -130,7 +131,6 @@ body {
   width: 100%;
   max-width: 1600px;
   padding: 0px min(10vw, 30px);
-  margin-top: 64px;
   text-align: center;
 }
 .my-loading {
