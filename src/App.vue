@@ -1,6 +1,6 @@
 <template>
   <a-layout class="my-element">
-    <NavigationBar />
+    <NavigationBar class="nav-bar" />
     <a-layout-content class="my-pane">
       <a-spin v-if="loading" class="my-loading" />
       <MessagePane v-if="!loading" :messages="messages" />
@@ -112,6 +112,16 @@ export default {
 </script>
 
 <style>
+body {
+  overflow-x: hidden;
+}
+.nav-bar {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  padding-left: min(10vw, 30px) !important;
+  padding-right: min(10vw, 30px) !important;
+}
 .my-element {
   min-height: 100vh !important;
   min-height: calc(var(--vh, 1vh) * 100) !important;
@@ -119,8 +129,8 @@ export default {
 .my-pane {
   width: 100%;
   max-width: 1600px;
-  margin: 0px auto;
-  padding: 30px min(10vw, 30px);
+  padding: 0px min(10vw, 30px);
+  margin-top: 64px;
   text-align: center;
 }
 .my-loading {
