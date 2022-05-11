@@ -1,64 +1,72 @@
 <template>
-  <a-row class="message-pane" :gutter="[12, 12]">
-    <a-col :xs="{ span: 24 }" :md="{ span: 12 }" :lg="{ span: 8 }">
-      <div
-        class="top-message"
-        v-for="(message, messageIndex) in messages.slice(0, 1)"
-        :key="messageIndex"
-      >
-        <message-card
-          :message="message"
-          :ref="`message-${messageIndex}`"
-          :play-this-only="playThisOnly"
-          :message-index="messageIndex"
-          type="top"
-        />
-      </div>
-    </a-col>
-    <a-col :xs="{ span: 24 }" :md="{ span: 12 }" :lg="{ span: 16 }">
-      <a-row :gutter="[12, 12]">
-        <a-col
-          v-for="(message, messageIndex) in messages.slice(1, 5)"
-          :key="messageIndex + 1"
-          :xs="{ span: 24 }"
-          :md="{ span: 12 }"
-          :lg="{ span: 12 }"
+  <transition name="bounce" appear>
+    <a-row class="message-pane top-10-pane" :gutter="[12, 12]">
+      <a-col :xs="{ span: 24 }" :md="{ span: 12 }" :lg="{ span: 8 }">
+        <div
+          class="top-message"
+          v-for="(message, messageIndex) in messages.slice(0, 1)"
+          :key="messageIndex"
         >
-          <div class="rectangle">
-            <message-card
-              :message="message"
-              :ref="`message-${messageIndex + 1}`"
-              :play-this-only="playThisOnly"
-              :message-index="messageIndex + 1"
-              type="top"
-            />
-          </div>
-        </a-col>
-      </a-row>
-    </a-col>
-  </a-row>
-
+          <message-card
+            :message="message"
+            :ref="`message-${messageIndex}`"
+            :play-this-only="playThisOnly"
+            :message-index="messageIndex"
+            type="top"
+          />
+        </div>
+      </a-col>
+      <a-col :xs="{ span: 24 }" :md="{ span: 12 }" :lg="{ span: 16 }">
+        <a-row :gutter="[12, 12]">
+          <transition-group appear @before-enter="beforeEnter" @enter="enter">
+            <a-col
+              v-for="(message, messageIndex) in messages.slice(1, 5)"
+              :key="messageIndex + 1"
+              :xs="{ span: 24 }"
+              :md="{ span: 12 }"
+              :lg="{ span: 12 }"
+              :data-index="messageIndex + 1"
+            >
+              <div class="rectangle">
+                <message-card
+                  :message="message"
+                  :ref="`message-${messageIndex + 1}`"
+                  :play-this-only="playThisOnly"
+                  :message-index="messageIndex + 1"
+                  type="top"
+                />
+              </div>
+            </a-col>
+          </transition-group>
+        </a-row>
+      </a-col>
+    </a-row>
+  </transition>
   <a-row class="message-pane" :gutter="[12, 12]">
-    <a-col
-      v-for="(message, messageIndex) in messages.slice(6)"
-      :key="messageIndex + 6"
-      :xs="{ span: 24 }"
-      :md="{ span: 8 }"
-      :lg="{ span: 4 }"
-    >
-      <div class="normal-message">
-        <message-card
-          :message="message"
-          :ref="`message-${messageIndex + 6}`"
-          :play-this-only="playThisOnly"
-          :message-index="messageIndex + 6"
-        />
-      </div>
-    </a-col>
+    <transition-group appear @before-enter="beforeEnter" @enter="enter">
+      <a-col
+        v-for="(message, messageIndex) in messages.slice(6)"
+        :key="messageIndex + 6"
+        :xs="{ span: 24 }"
+        :md="{ span: 8 }"
+        :lg="{ span: 4 }"
+        :data-index="messageIndex + 6"
+      >
+        <div class="normal-message">
+          <message-card
+            :message="message"
+            :ref="`message-${messageIndex + 6}`"
+            :play-this-only="playThisOnly"
+            :message-index="messageIndex + 6"
+          />
+        </div>
+      </a-col>
+    </transition-group>
   </a-row>
 </template>
 <script>
 import MessageCard from "./MessageCard.vue";
+import gsap from "gsap";
 export default {
   components: { MessageCard },
   props: {
@@ -88,6 +96,19 @@ export default {
       this.currentTrack = newTrack;
       newPlayer.play();
     },
+    beforeEnter(el) {
+      el.style.opacity = 0;
+      el.style.transform = "translateY(100px)";
+    },
+    enter(el, done) {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        onComplete: done,
+        delay: el.dataset.index * 0.2,
+      });
+    },
   },
 };
 </script>
@@ -95,6 +116,7 @@ export default {
 .message-pane {
   padding: 10px calc(10px - 6px);
 }
+
 .top-message {
   height: 100%;
   width: 100%;
@@ -106,7 +128,7 @@ export default {
 }
 
 .normal-message {
-  aspect-ratio: 8 / 9;
+  aspect-ratio: 1 / 1;
 }
 
 @media screen and (max-width: 768px) {
@@ -123,6 +145,23 @@ export default {
 @media screen and (max-width: 992px) {
   .rectangle {
     aspect-ratio: 1 / 1;
+  }
+}
+.bounce-enter-active {
+  animation: bounce-in 0.8s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.8s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

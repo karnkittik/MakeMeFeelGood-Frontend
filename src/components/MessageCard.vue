@@ -10,14 +10,18 @@
       >
         <a-button type="text" shape="circle" @click="report()">
           <template #icon>
-            <warning-outlined style="font-size: large; color: grey" />
+            <exclamation-circle-outlined
+              style="font-size: large; color: grey"
+            />
           </template>
         </a-button>
       </a-tooltip>
       <a-tooltip v-else title="Reported" color="grey" placement="bottom">
         <a-button type="text" shape="circle" disabled>
           <template #icon>
-            <warning-filled style="font-size: large; color: #be3f5f" />
+            <exclamation-circle-filled
+              style="font-size: large; color: #be3f5f"
+            />
           </template>
         </a-button>
       </a-tooltip>
@@ -75,10 +79,10 @@
 </template>
 <script>
 import {
-  WarningOutlined,
+  ExclamationCircleOutlined,
   ArrowUpOutlined,
   UpCircleFilled,
-  WarningFilled,
+  ExclamationCircleFilled,
   PlayCircleOutlined,
   PlayCircleFilled,
 } from "@ant-design/icons-vue";
@@ -105,10 +109,10 @@ export default {
     messageIndex: Number,
   },
   components: {
-    WarningOutlined,
+    ExclamationCircleOutlined,
     ArrowUpOutlined,
     UpCircleFilled,
-    WarningFilled,
+    ExclamationCircleFilled,
     PlayCircleOutlined,
     PlayCircleFilled,
   },
@@ -134,6 +138,7 @@ export default {
         .patch(config.API + `/report/${this.message.id}`)
         .then((response) => {
           this.reported = true;
+          console.log(this.reported);
         })
         .catch((error) => console.log(error));
     },
@@ -189,4 +194,12 @@ export default {
   color: #eec050 !important;
   font-weight: bold;
 } */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter, .fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
