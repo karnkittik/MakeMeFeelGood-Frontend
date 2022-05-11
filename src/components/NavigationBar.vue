@@ -22,7 +22,9 @@
 import dayjs from 'dayjs';
 import moment from 'moment';
 import isToday from 'dayjs/plugin/isToday';
+import isYesterday from 'dayjs/plugin/isYesterday';
 dayjs.extend(isToday)
+dayjs.extend(isYesterday)
 import { CalendarOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref, computed } from 'vue';
 export default defineComponent({
@@ -31,10 +33,13 @@ export default defineComponent({
     const showCalendar = ref(false);
     
     const formatDate = computed(() => {
-      var dateValue = date.value.get('date')
-      var monthValue = date.value.get('month')
-      var yearValue = date.value.get('year')
-      return date.value.isToday() ? "Today" : `${String(dateValue).padStart(2, '0')}/${String(monthValue+1).padStart(2, '0')}/${String(yearValue)}`
+      if (date.value.isToday()){
+        return "Today"
+      } else if (date.value.isYesterday()){
+        return "Yesterday"
+      } else {
+        return date.value.format('DD/MMM/YYYY')
+      }
     })
 
     const disabledDate = current => {
