@@ -22,7 +22,7 @@
     </div>
     <a-typography-paragraph
       v-if="type == 'top'"
-      :ellipsis="{ rows: 3, expandable: true, symbol: '↩' }"
+      :ellipsis="{ rows: 3, expandable: true, symbol: '⏎' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.1,
@@ -34,7 +34,7 @@
     />
     <a-typography-paragraph
       v-else
-      :ellipsis="{ rows: 3, expandable: true, symbol: '↩' }"
+      :ellipsis="{ rows: 3, expandable: true, symbol: '⏎' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.5,
@@ -49,12 +49,7 @@
         <source :src="message.url" type="audio/mpeg" />
       </audio>
       <div>
-        <a-button
-          type="text"
-          shape="circle"
-          @click="playThisMessage"
-          style="cursor: default !important"
-        >
+        <a-button type="text" shape="circle" @click="playThisMessage">
           <template #icon>
             <play-circle-outlined
               v-if="!playing"
@@ -62,7 +57,11 @@
             />
             <play-circle-filled
               v-else
-              style="font-size: large; color: #9b54bd"
+              style="
+                font-size: large;
+                color: #9b54bd;
+                cursor: default !important;
+              "
             />
           </template>
         </a-button>
