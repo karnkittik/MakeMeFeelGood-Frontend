@@ -1,5 +1,5 @@
 <template>
-  <div class="float-button">
+  <div class="float-button" v-if="!visible">
     <a-button
       class="write-button"
       type="primary"
@@ -11,29 +11,51 @@
       </template>
     </a-button>
   </div>
-  <a-modal v-model:visible="visible" :footer="null">
+  <a-modal
+    v-model:visible="visible"
+    :footer="null"
+    :destroyOnClose="true"
+    :afterClose="(text = '')"
+  >
     <div class="modal-body">
-      <a-typography>
-        <a-typography-title :level="3" content="How to write" />
-        <a-typography-paragraph content="1. English only" />
-        <a-typography-paragraph content="2. Within 100 letters" />
-        <a-typography-paragraph content="3. Positive" />
-      </a-typography>
-      <a-divider class="divider divider-horizontal" type="horizontal" />
-      <a-divider class="divider divider-vertical" type="vertical" />
-      <span class="post-bottom-block">
+      <div class="modal-guide">
+        <a-typography-title
+          :level="3"
+          content="How to write"
+          style="color: white; text-align: center"
+        />
+        <a-typography-paragraph
+          content="Write an English inspirational positive message for making people feel good"
+          style="
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 5px;
+          "
+          strong
+        />
+
+        <div class="my-card example-card">
+          <div class="typewriter">
+            <h4>Make me feel good...</h4>
+          </div>
+        </div>
+      </div>
+      <div class="modal-write">
         <a-textarea
           class="body-text-input"
           v-model:value="text"
           show-count
           size="large"
-          :auto-size="{ minRows: 9, maxRows: 9 }"
-          :maxlength="100"
+          :maxlength="80"
+          placeholder="Write here..."
         />
-        <a-button class="post-button" type="primary" shape="round"
-          >Post</a-button
-        >
-      </span>
+        <div class="post-bottom-block">
+          <a-button class="post-button" type="primary" shape="round"
+            >Post</a-button
+          >
+        </div>
+      </div>
     </div>
   </a-modal>
 </template>
@@ -44,7 +66,7 @@ export default defineComponent({
   setup() {
     const visible = ref(false);
     const text = ref("");
-
+    const image = "@/assets/background1.jpg";
     const showModal = () => {
       visible.value = true;
     };
@@ -56,6 +78,7 @@ export default defineComponent({
     return {
       visible,
       text,
+      image,
       showModal,
       handleOk,
     };
@@ -70,51 +93,64 @@ export default defineComponent({
   position: fixed;
   width: 64px;
   height: 64px;
-  bottom: 30px;
-  right: 30px;
-  /* background-color: red; */
+  bottom: 24px;
+  right: 24px;
 }
 .modal-body {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  /* background: pink; */
+  border-radius: 8px;
+  height: 100%;
 }
-.divider {
-  background-color: #3cb51b;
-}
-.divider-vertical {
-  border-left: 2px solid rgba(0, 0, 0, 0.06) !important;
-  min-height: 300px !important;
-  margin: 0px 8px !important;
-}
-.divider-horizontal {
-  border-top: 2px solid rgba(0, 0, 0, 0.06) !important;
-  min-width: 0px !important;
-  margin: 8px 0px !important;
-  display: none !important;
-}
-.post-bottom-block {
+.modal-guide {
+  width: 100%;
+  min-height: 24vh;
+  height: 100%;
+  /* background: yellow; */
+  border-radius: 8px;
+  padding: 20px !important;
+  background-image: url(https://www.img.in.th/images/bcf7688121d8d0a88f950d0d695c1db8.jpg);
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  align-items: end;
 }
-.body-description {
-  width: 30%;
+.modal-write {
+  width: 100%;
+  min-height: 24vh;
+  height: 100%;
+  /* background: red; */
+  border-radius: 8px;
+  padding: 20px !important;
+  padding-top: 40px !important;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
+
 .body-text-input {
-  height: 250px;
-  width: 250px;
+  width: 100%;
+  height: calc(100% - 4px);
+}
+.body-text-input > .ant-input {
+  resize: none !important;
 }
 .post-button {
   width: 64px;
+  float: right;
+  margin-top: 14px;
 }
 .write-button {
-  width: 64px !important;
-  height: 64px !important;
+  width: 54px !important;
+  height: 54px !important;
+}
+.example-card {
+  height: 120px;
+  justify-content: center !important;
+  align-items: center !important;
 }
 .ant-input-textarea-show-count::after {
   float: left !important;
-  padding: 16px 0;
+  padding-top: 20px;
 }
 .ant-modal-close-x {
   width: 40px !important;
@@ -123,33 +159,58 @@ export default defineComponent({
 }
 .ant-modal-content {
   border-radius: 10px !important;
+  height: 54vh;
 }
+.ant-modal-body {
+  padding: 0 !important;
+  height: 100%;
+}
+
 @media screen and (max-width: 768px) {
-  .divider-vertical {
-    display: none !important;
-  }
-  .divider-horizontal {
-    display: inline-block !important;
-    width: 100% !important;
-  }
   .modal-body {
     flex-direction: column;
     width: 100%;
   }
+  .modal-guide {
+    height: 40%;
+  }
+  .modal-write {
+    padding-top: 20px !important;
+  }
   .body-text-input {
     width: 100%;
   }
-  .post-bottom-block {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
+  .example-card {
+    display: none;
+  }
+}
+.typewriter h4 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
     width: 100%;
   }
-  .ant-input-textarea-show-count::after {
-    float: left !important;
-    margin: 0 !important;
-    padding: 16px 0;
-    width: auto;
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
   }
 }
 </style>
