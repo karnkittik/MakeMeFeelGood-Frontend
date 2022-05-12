@@ -157,7 +157,7 @@ export default {
     transform: scale(0);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.02);
   }
   100% {
     transform: scale(1);
