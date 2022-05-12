@@ -139,6 +139,7 @@ body {
 /* width */
 body::-webkit-scrollbar {
   width: 8px;
+  position: fixed !important;
 }
 
 /* Track */
@@ -151,5 +152,9 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: gray;
   border-radius: 8px;
+}
+
+.html {
+  overflow-y: auto;
 }
 </style>
