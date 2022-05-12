@@ -13,7 +13,7 @@
               v-model:value="date"
               :fullscreen="false"
               :disabled-date="disabledDate"
-              @select="onClick"
+              @change="onClick"
             />
           </div>
         </template>
@@ -51,7 +51,10 @@ dayjs.extend(isYesterday);
 import { CalendarOutlined } from "@ant-design/icons-vue";
 import { defineComponent, ref, computed } from "vue";
 export default defineComponent({
-  setup() {
+  props: {
+    changeDate: Function,
+  },
+  setup(props) {
     const date = ref(dayjs());
     const showCalendar = ref(false);
 
@@ -72,7 +75,8 @@ export default defineComponent({
 
     const onClick = () => {
       showCalendar.value = !showCalendar.value;
-      console.log(date.value.toString());
+      // console.log(date.value.toString());
+      props.changeDate(date.value);
     };
 
     return {

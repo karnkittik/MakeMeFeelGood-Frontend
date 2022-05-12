@@ -1,6 +1,6 @@
 <template>
   <a-layout class="my-element">
-    <NavigationBar class="nav-bar" />
+    <NavigationBar class="nav-bar" :changeDate="changeDate" />
     <div style="height: 80px"></div>
     <a-layout-content class="my-pane">
       <a-spin v-if="loading" class="my-loading" />
@@ -23,18 +23,23 @@ import MessagePane from "./components/MessagePane.vue";
 import MessageCard from "./components/MessageCard.vue";
 import CreateModal from "./components/CreateModal.vue";
 import config from "./config";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 export default {
   components: { NavigationBar, MessagePane, MessageCard, CreateModal },
   data() {
     return {
       messages: [],
       loading: true,
+      date: dayjs(),
     };
   },
   methods: {
-    getMessages() {
+    getMessages(tm = 1652109817000) {
+      this.loading = true;
       this.axios
-        .get(config.API + "/1652109817000")
+        .get(config.API + "/" + tm.toString())
         .then((response) => {
           this.messages = response.data;
           this.loading = false;
@@ -111,9 +116,23 @@ export default {
         this.loading = false;
       }, 2000);
     },
+    changeDate(date) {
+      this.date = date;
+    },
   },
   mounted() {
-    this.getFakeMessages();
+    let tm = this.date.utc().startOf("day").valueOf();
+    // this.getFakeMessages();
+    this.getMessages(tm);
+  },
+  watch: {
+    date(newDate, oldDate) {
+      if (!oldDate.isSame(newDate, "day")) {
+        // console.log("Hey: ", this.date.toString());
+        let tm = newDate.utc().startOf("day").valueOf();
+        this.getMessages(tm);
+      }
+    },
   },
 };
 </script>
