@@ -123,7 +123,7 @@ export default {
   position: fixed;
   z-index: 1;
   width: 100vw;
-  padding: 0 min(10vw, 15px) !important;
+  padding: 0 min(10vw, 20px) !important;
 }
 .my-element {
   min-height: 100vh !important;
