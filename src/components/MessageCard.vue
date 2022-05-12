@@ -22,7 +22,7 @@
     </div>
     <a-typography-paragraph
       v-if="type == 'top'"
-      :ellipsis="{ rows: 3, expandable: true, symbol: '⏎' }"
+      :ellipsis="{ rows: 3, expandable: true, symbol: '⮐' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.1,
@@ -34,7 +34,7 @@
     />
     <a-typography-paragraph
       v-else
-      :ellipsis="{ rows: 3, expandable: true, symbol: '⏎' }"
+      :ellipsis="{ rows: 3, expandable: true, symbol: '⮐' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.5,
