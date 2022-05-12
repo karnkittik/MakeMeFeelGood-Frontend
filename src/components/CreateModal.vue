@@ -100,6 +100,7 @@ export default defineComponent({
           .then((response) => {
             console.log(response);
             sending.value = false;
+            visible.value = false;
           })
           .catch((error) => console.log(error));
       }
