@@ -122,8 +122,8 @@ export default {
   },
   mounted() {
     let tm = this.date.utc().startOf("day").valueOf();
-    // this.getFakeMessages();
-    this.getMessages(tm);
+    this.getFakeMessages();
+    // this.getMessages(tm);
   },
   watch: {
     date(newDate, oldDate) {
@@ -147,12 +147,13 @@ export default {
 .my-element {
   min-height: 100vh !important;
   min-height: calc(var(--vh, 1vh) * 100 - 1px) !important;
+  /* width: 100vw; */
 }
 .my-pane {
   width: 100%;
-  max-width: 1600px;
   padding: 0px min(10vw, 30px);
   text-align: center;
+  overflow: hidden;
 }
 .my-loading {
   margin: 20vh 0 !important;

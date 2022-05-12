@@ -113,7 +113,7 @@ export default {
 </script>
 <style>
 .message-pane {
-  padding: 10px calc(10px - 6px);
+  padding: 13px calc(13px - 6px);
 }
 
 .top-10-pane {

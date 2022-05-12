@@ -1,28 +1,30 @@
 <template>
-  <div class="float-button" v-if="!visible">
-    <a-button
-      class="write-button"
-      type="primary"
-      shape="circle"
-      @click="showModal"
-    >
-      <template #icon>
-        <edit-outlined style="font-size: 20px" />
-      </template>
-    </a-button>
+  <div class="float-button">
+    <transition name="slide-fade">
+      <a-button
+        class="write-button"
+        type="primary"
+        shape="circle"
+        @click="showModal"
+        v-if="!visible"
+      >
+        <template #icon>
+          <edit-outlined style="font-size: 20px" />
+        </template> </a-button
+    ></transition>
   </div>
   <a-modal
     v-model:visible="visible"
     :footer="null"
-    :destroyOnClose="true"
-    :afterClose="() => (text = '')"
+    :afterClose="resetText()"
+    destroyOnClose
   >
     <div class="modal-body">
       <div class="modal-guide">
         <a-typography-title
           :level="3"
           content="How to write"
-          style="color: white; text-align: center"
+          style="color: white; text-align: center; padding: 10px"
         />
         <a-typography-paragraph
           content="Write an English inspirational positive message for making people feel good"
@@ -37,11 +39,18 @@
 
         <div class="my-card example-card">
           <div class="typewriter">
-            <h4>Make me feel good...</h4>
+            <h4>You make me feel good</h4>
           </div>
         </div>
       </div>
       <div class="modal-write">
+        <a-alert
+          v-if="!valid"
+          message="English input only"
+          type="warning"
+          show-icon
+          style="margin-bottom: 5px"
+        />
         <a-textarea
           class="body-text-input"
           v-model:value="text"
@@ -55,7 +64,7 @@
             class="post-button"
             type="primary"
             shape="round"
-            @click="createMessage()"
+            @click="createMessage"
             :loading="sending"
             >{{ sending ? "" : "Post" }}</a-button
           >
@@ -75,33 +84,45 @@ export default defineComponent({
     const text = ref("");
     const sending = ref(false);
     const image = "@/assets/background1.jpg";
+    const valid = ref(true);
     const showModal = () => {
       visible.value = true;
     };
-    const createMessage = () => {
-      sending.value = true;
-      axios
-        .post(config.API, {
-          message: text.value,
-        })
-        .then((response) => {
-          console.log(response);
-          sending.value = false;
-        })
-        .catch((error) => console.log(error));
+    const createMessage = async () => {
+      await checkValidText();
+      if (valid.value == true) {
+        sending.value = true;
+        axios
+          .post(config.API, {
+            message: text.value,
+          })
+          .then((response) => {
+            console.log(response);
+            sending.value = false;
+          })
+          .catch((error) => console.log(error));
+      }
     };
-    const handleOk = (e) => {
-      console.log(e);
-      visible.value = false;
+    const resetText = () => {
+      text.value = "";
+      valid.value = true;
+    };
+    const checkValidText = async () => {
+      let english = /^[a-zA-Z0-9$@$!%*?&#'^-_. +\r\n]+$/;
+      let result = english.test(text.value);
+      valid.value = result;
     };
     return {
       visible,
       text,
       image,
       sending,
+      valid,
       showModal,
-      handleOk,
       createMessage,
+      showModal,
+      resetText,
+      checkValidText,
     };
   },
   components: {
@@ -112,10 +133,13 @@ export default defineComponent({
 <style>
 .float-button {
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 64px;
   height: 64px;
   bottom: 24px;
-  right: 24px;
+  right: calc(100% - 100vw + 24px);
 }
 .modal-body {
   display: flex;
@@ -130,7 +154,7 @@ export default defineComponent({
   /* background: yellow; */
   border-radius: 8px;
   padding: 20px !important;
-  background-image: url(https://www.img.in.th/images/bcf7688121d8d0a88f950d0d695c1db8.jpg);
+  background-image: url("../assets/background1.jpg");
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -183,7 +207,7 @@ export default defineComponent({
 }
 .ant-modal-content {
   border-radius: 10px !important;
-  height: 54vh;
+  height: 58vh;
 }
 .ant-modal-body {
   padding: 0 !important;
@@ -191,6 +215,10 @@ export default defineComponent({
 }
 
 @media screen and (max-width: 768px) {
+  .float-button {
+    bottom: 12px;
+    right: calc(100% - 100vw + 12px);
+  }
   .modal-body {
     flex-direction: column;
     width: 100%;
@@ -206,6 +234,9 @@ export default defineComponent({
   }
   .example-card {
     display: none;
+  }
+  .ant-modal-close-x {
+    color: white !important;
   }
 }
 .typewriter h4 {
@@ -236,5 +267,18 @@ export default defineComponent({
   50% {
     border-color: orange;
   }
+}
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+  transform: translate(80px, 80px);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translate(180px, 180px);
+  opacity: 0;
 }
 </style>
