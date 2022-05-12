@@ -130,7 +130,8 @@ export default {
       if (!oldDate.isSame(newDate, "day")) {
         // console.log("Hey: ", this.date.toString());
         let tm = newDate.utc().startOf("day").valueOf();
-        this.getMessages(tm);
+        // this.getMessages(tm);
+        this.getFakeMessages();
       }
     },
   },
@@ -147,13 +148,14 @@ export default {
 .my-element {
   min-height: 100vh !important;
   min-height: calc(var(--vh, 1vh) * 100 - 1px) !important;
-  /* width: 100vw; */
 }
 .my-pane {
   width: 100%;
   padding: 0px min(10vw, 30px);
   text-align: center;
   overflow: hidden;
+  max-width: 1260px;
+  margin: auto;
 }
 .my-loading {
   margin: 20vh 0 !important;

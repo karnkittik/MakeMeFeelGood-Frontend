@@ -18,6 +18,7 @@
     :footer="null"
     :afterClose="resetText()"
     destroyOnClose
+    :maskStyle="{ background: 'rgba(0,0,0,0.95)' }"
   >
     <div class="modal-body">
       <div class="modal-guide">
