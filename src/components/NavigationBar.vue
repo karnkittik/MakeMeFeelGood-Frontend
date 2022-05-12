@@ -28,11 +28,15 @@
           </template>
         </a-button>
       </a-popover>
-      <a-typography-title :level="3" class="my-text">
+      <a-typography-title
+        :level="4"
+        class="my-text"
+        style="margin-left: 10px !important"
+      >
         {{ formatDate }}
       </a-typography-title>
     </div>
-    <a-typography-title :level="3" class="my-text">
+    <a-typography-title :level="4" class="my-text">
       MakeMeFeelGood
     </a-typography-title>
   </a-layout-header>
@@ -89,9 +93,10 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 36px 30px !important;
+  padding: 36px 0px !important;
   background: #f0f2f5 !important;
 }
+
 .my-date {
   display: flex;
   justify-content: space-between;
@@ -100,7 +105,6 @@ export default defineComponent({
 .my-text {
   color: black !important;
   margin: 0 !important;
-  margin-left: 10px !important;
 }
 .my-date-picker-block {
   width: 300px;
@@ -110,5 +114,11 @@ export default defineComponent({
 .calendar-button {
   width: 48px !important;
   height: 48px !important;
+}
+@media screen and (max-width: 768px) {
+  .calendar-button {
+    width: 36px !important;
+    height: 36px !important;
+  }
 }
 </style>

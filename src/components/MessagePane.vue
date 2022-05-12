@@ -116,6 +116,11 @@ export default {
   padding: 10px calc(10px - 6px);
 }
 
+.top-10-pane {
+  background: blue;
+  border-radius: 10px;
+}
+
 .top-message {
   height: 100%;
   width: 100%;
@@ -132,10 +137,10 @@ export default {
 
 @media screen and (max-width: 768px) {
   .normal-message {
-    aspect-ratio: 2 / 1 !important;
+    aspect-ratio: 17 / 10 !important;
   }
   .rectangle {
-    aspect-ratio: 2 / 1 !important;
+    aspect-ratio: 17 / 10 !important;
   }
   .top-message {
     aspect-ratio: 4 / 3 !important;
