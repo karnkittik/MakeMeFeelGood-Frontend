@@ -125,7 +125,7 @@ body {
 }
 .my-element {
   min-height: 100vh !important;
-  min-height: calc(var(--vh, 1vh) * 100) !important;
+  min-height: calc(var(--vh, 1vh) * 100 - 1px) !important;
 }
 .my-pane {
   width: 100%;
