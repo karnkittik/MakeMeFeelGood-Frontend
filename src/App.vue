@@ -128,6 +128,7 @@ export default {
 .my-element {
   min-height: 100vh !important;
   min-height: calc(var(--vh, 1vh) * 100 - 1px) !important;
+  width: 100vw;
 }
 .my-pane {
   width: 100%;
