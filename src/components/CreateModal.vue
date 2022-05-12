@@ -15,7 +15,7 @@
     v-model:visible="visible"
     :footer="null"
     :destroyOnClose="true"
-    :afterClose="(text = '')"
+    :afterClose="() => (text = '')"
   >
     <div class="modal-body">
       <div class="modal-guide">
@@ -51,8 +51,13 @@
           placeholder="Write here..."
         />
         <div class="post-bottom-block">
-          <a-button class="post-button" type="primary" shape="round"
-            >Post</a-button
+          <a-button
+            class="post-button"
+            type="primary"
+            shape="round"
+            @click="createMessage()"
+            :loading="sending"
+            >{{ sending ? "" : "Post" }}</a-button
           >
         </div>
       </div>
@@ -62,15 +67,29 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { EditOutlined } from "@ant-design/icons-vue";
+import axios from "axios";
+import config from "../config";
 export default defineComponent({
   setup() {
     const visible = ref(false);
     const text = ref("");
+    const sending = ref(false);
     const image = "@/assets/background1.jpg";
     const showModal = () => {
       visible.value = true;
     };
-
+    const createMessage = () => {
+      sending.value = true;
+      axios
+        .post(config.API, {
+          message: text.value,
+        })
+        .then((response) => {
+          console.log(response);
+          sending.value = false;
+        })
+        .catch((error) => console.log(error));
+    };
     const handleOk = (e) => {
       console.log(e);
       visible.value = false;
@@ -79,8 +98,10 @@ export default defineComponent({
       visible,
       text,
       image,
+      sending,
       showModal,
       handleOk,
+      createMessage,
     };
   },
   components: {
@@ -136,8 +157,11 @@ export default defineComponent({
 }
 .post-button {
   width: 64px;
+  min-width: 64px;
   float: right;
   margin-top: 14px;
+  font-weight: bold !important;
+  letter-spacing: 0.05em;
 }
 .write-button {
   width: 54px !important;
