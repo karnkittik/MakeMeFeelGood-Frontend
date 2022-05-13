@@ -49,7 +49,13 @@
         <source v-if="soundAvailable" :src="message.url" type="audio/mpeg" />
       </audio>
       <div>
-        <a-button type="text" shape="circle" @click="playThisMessage">
+        <a-button
+          type="text"
+          shape="circle"
+          @click="playThisMessage"
+          :disabled="!soundAvailable"
+          :style="!soundAvailable && { cursor: 'default !important' }"
+        >
           <template #icon>
             <play-circle-outlined
               v-if="!playing"
@@ -57,15 +63,13 @@
             />
             <play-circle-filled
               v-else
-              style="
-                font-size: large;
-                color: #9b54bd;
-                cursor: default !important;
-              "
+              style="font-size: large; color: #9b54bd"
             />
           </template>
         </a-button>
-        <span style="color: grey">Play</span>
+        <span style="color: grey">{{
+          !soundAvailable ? "Not ready" : "Play"
+        }}</span>
       </div>
       <div>
         <span style="color: grey">{{ message.upvote }}</span>
@@ -137,6 +141,16 @@ export default {
       soundAvailable: false,
     };
   },
+  created() {
+    var refreshIntervalId = setInterval(() => {
+      let now = new Date().valueOf();
+      let diff = Math.abs(now - this.message.created_at);
+      if (diff > 40000) {
+        this.soundAvailable = true;
+        clearInterval(refreshIntervalId);
+      }
+    }, 1000);
+  },
   methods: {
     upvote() {
       this.upvoted = true;
@@ -156,14 +170,10 @@ export default {
         .catch((error) => console.log(error));
     },
     playThisMessage() {
-      this.axios
-        .get(this.message.url)
-        .then((response) => {
-          this.soundAvailable = true;
-          this.playThisOnly(this.messageIndex);
-          this.playing = true;
-        })
-        .catch((error) => console.log(error));
+      if (this.soundAvailable) {
+        this.playThisOnly(this.messageIndex);
+        this.playing = true;
+      }
     },
   },
 };
