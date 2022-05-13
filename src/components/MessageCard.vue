@@ -46,7 +46,7 @@
     />
     <div class="card-bottom-action-block">
       <audio ref="player" @ended="playing = false">
-        <source :src="message.url" type="audio/mpeg" />
+        <source v-if="soundAvailable" :src="message.url" type="audio/mpeg" />
       </audio>
       <div>
         <a-button type="text" shape="circle" @click="playThisMessage">
@@ -134,6 +134,7 @@ export default {
       upvoted: false,
       reported: false,
       playing: false,
+      soundAvailable: false,
     };
   },
   methods: {
@@ -155,8 +156,14 @@ export default {
         .catch((error) => console.log(error));
     },
     playThisMessage() {
-      this.playThisOnly(this.messageIndex);
-      this.playing = true;
+      this.axios
+        .get(this.message.url)
+        .then((response) => {
+          this.soundAvailable = true;
+          this.playThisOnly(this.messageIndex);
+          this.playing = true;
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
