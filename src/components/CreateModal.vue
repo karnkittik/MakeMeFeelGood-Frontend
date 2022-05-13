@@ -110,7 +110,8 @@ export default defineComponent({
       valid.value = true;
     };
     const checkValidText = async () => {
-      let english = /^[a-zA-Z0-9$@$!%*?&#'^-_. +\r\n]+$/;
+      let english = /^[\x20-\x7E\r\n]+$/;
+      text.value = text.value.trim();
       let result = english.test(text.value);
       valid.value = result;
     };
