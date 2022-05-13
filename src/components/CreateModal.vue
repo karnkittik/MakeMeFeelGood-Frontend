@@ -10,8 +10,9 @@
       >
         <template #icon>
           <edit-outlined style="font-size: 20px" />
-        </template> </a-button
-    ></transition>
+        </template>
+      </a-button>
+    </transition>
   </div>
   <a-modal
     v-model:visible="visible"
@@ -53,6 +54,20 @@
           show-icon
           style="margin-bottom: 5px"
         />
+        <a-alert
+          v-if="negative"
+          message="You could do better"
+          type="warning"
+          show-icon
+          style="margin-bottom: 5px"
+        />
+        <a-alert
+          v-if="duplicate"
+          message="Someone said it already"
+          type="warning"
+          show-icon
+          style="margin-bottom: 5px"
+        />
         <a-textarea
           class="body-text-input"
           v-model:value="text"
@@ -81,12 +96,17 @@ import { EditOutlined } from "@ant-design/icons-vue";
 import axios from "axios";
 import config from "../config";
 export default defineComponent({
-  setup() {
+  props: {
+    addNewMessage: Function,
+  },
+  setup(props) {
     const visible = ref(false);
     const text = ref("");
     const sending = ref(false);
     const image = "@/assets/background1.jpg";
     const valid = ref(true);
+    const negative = ref(false);
+    const duplicate = ref(false);
     const showModal = () => {
       visible.value = true;
     };
@@ -94,16 +114,25 @@ export default defineComponent({
       await checkValidText();
       if (valid.value == true) {
         sending.value = true;
+        negative.value = false;
+        duplicate.value = false;
         axios
           .post(config.API, {
             message: text.value,
           })
           .then((response) => {
-            console.log(response);
+            props.addNewMessage({ ...response.data, text: text.value });
             sending.value = false;
             visible.value = false;
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            if (error.response.status == 400) {
+              negative.value = true;
+            } else if (error.response.status == 409) {
+              duplicate.value = true;
+            }
+            sending.value = false;
+          });
       }
     };
     const resetText = () => {
@@ -122,6 +151,8 @@ export default defineComponent({
       image,
       sending,
       valid,
+      negative,
+      duplicate,
       showModal,
       createMessage,
       showModal,

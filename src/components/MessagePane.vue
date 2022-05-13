@@ -75,6 +75,10 @@ export default {
         return [];
       },
     },
+    totalMessages: {
+      type: Number,
+    },
+    updateNumberMessage: Function,
   },
   data() {
     return {
@@ -104,8 +108,8 @@ export default {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        onComplete: done,
-        delay: el.dataset.index * 0.2,
+        onComplete: this.updateNumberMessage(),
+        delay: (el.dataset.index - this.totalMessages) * 0.2,
       });
     },
   },

@@ -7,10 +7,12 @@
       <MessagePane
         v-if="!loading && messages.length != 0"
         :messages="messages"
+        :total-messages="totalMessages"
+        :update-number-message="updateNumberMessage"
       />
       <a-empty v-if="!loading && messages.length == 0" class="my-loading" />
     </a-layout-content>
-    <CreateModal />
+    <CreateModal :add-new-message="addNewMessage" />
     <a-layout-footer style="text-align: center">
       MakeMeFeelGood ©2022
     </a-layout-footer>
@@ -33,6 +35,7 @@ export default {
       messages: [],
       loading: true,
       date: dayjs(),
+      totalMessages: 0,
     };
   },
   methods: {
@@ -47,6 +50,7 @@ export default {
         .catch((error) => console.log(error));
     },
     getFakeMessages() {
+      this.loading = true;
       setTimeout(() => {
         this.messages = [
           {
@@ -118,6 +122,12 @@ export default {
     },
     changeDate(date) {
       this.date = date;
+    },
+    addNewMessage(message) {
+      this.messages.push(message);
+    },
+    updateNumberMessage() {
+      this.totalMessages = this.messages.length;
     },
   },
   mounted() {
