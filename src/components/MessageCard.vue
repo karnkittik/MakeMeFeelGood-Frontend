@@ -142,13 +142,14 @@ export default {
     };
   },
   created() {
+    let diff = (new Date().valueOf() - this.message.created_at) / 1000;
+    var timeLeft = diff < 40 ? Math.ceil(40 - diff) : 0;
     var refreshIntervalId = setInterval(() => {
-      let now = new Date().valueOf();
-      let diff = Math.abs(now - this.message.created_at);
-      if (diff > 40000) {
+      if (!timeLeft) {
         this.soundAvailable = true;
         clearInterval(refreshIntervalId);
       }
+      timeLeft -= 1;
     }, 1000);
   },
   methods: {
