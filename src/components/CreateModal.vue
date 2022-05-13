@@ -18,7 +18,8 @@
     :footer="null"
     :afterClose="resetText()"
     destroyOnClose
-    :maskStyle="{ background: 'rgba(0,0,0,0.95)' }"
+    :maskStyle="{ background: 'rgba(0,0,0,0.9)' }"
+    width="580px"
   >
     <div class="modal-body">
       <div class="modal-guide">
@@ -151,7 +152,7 @@ export default defineComponent({
   height: 100%;
 }
 .modal-guide {
-  width: 100%;
+  width: 45%;
   min-height: 24vh;
   height: 100%;
   /* background: yellow; */
@@ -163,7 +164,7 @@ export default defineComponent({
   flex-direction: column;
 }
 .modal-write {
-  width: 100%;
+  width: 55%;
   min-height: 24vh;
   height: 100%;
   /* background: red; */
@@ -210,7 +211,7 @@ export default defineComponent({
 }
 .ant-modal-content {
   border-radius: 10px !important;
-  height: 58vh;
+  height: 50vh;
 }
 .ant-modal-body {
   padding: 0 !important;
@@ -228,9 +229,11 @@ export default defineComponent({
   }
   .modal-guide {
     height: 40%;
+    width: 100%;
   }
   .modal-write {
     padding-top: 20px !important;
+    width: 100%;
   }
   .body-text-input {
     width: 100%;
@@ -240,6 +243,9 @@ export default defineComponent({
   }
   .ant-modal-close-x {
     color: white !important;
+  }
+  .ant-modal-content {
+    height: 58vh;
   }
 }
 .typewriter h4 {
