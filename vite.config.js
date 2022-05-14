@@ -10,4 +10,14 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          "primary-color": "#1DA57A",
+        },
+        javascriptEnabled: true,
+      },
+    },
+  },
 });
