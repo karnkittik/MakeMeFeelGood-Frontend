@@ -149,6 +149,7 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap");
 .nav-bar {
   position: fixed;
   z-index: 1;
@@ -197,5 +198,9 @@ body::-webkit-scrollbar-thumb {
 
 .html {
   overflow-y: auto;
+}
+
+* {
+  font-family: "Quicksand", sans-serif;
 }
 </style>

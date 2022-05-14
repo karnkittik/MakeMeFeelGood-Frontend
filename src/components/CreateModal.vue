@@ -2,13 +2,14 @@
   <div class="float-button">
     <transition name="slide-fade">
       <a-button
-        class="write-button"
+        class="add-button"
+        type="primary"
         shape="circle"
         @click="showModal"
         v-if="!visible"
       >
         <template #icon>
-          <edit-outlined style="font-size: 20px" />
+          <plus-outlined style="font-size: 20px" />
         </template>
       </a-button>
     </transition>
@@ -91,7 +92,7 @@
 </template>
 <script>
 import { defineComponent, ref } from "vue";
-import { EditOutlined } from "@ant-design/icons-vue";
+import { PlusOutlined } from "@ant-design/icons-vue";
 import axios from "axios";
 import config from "../config";
 export default defineComponent({
@@ -162,7 +163,7 @@ export default defineComponent({
     };
   },
   components: {
-    EditOutlined,
+    PlusOutlined,
   },
 });
 </script>
@@ -223,9 +224,10 @@ export default defineComponent({
   font-weight: bold !important;
   letter-spacing: 0.05em;
 }
-.write-button {
+.add-button {
   width: 54px !important;
   height: 54px !important;
+  box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.25) !important;
 }
 .example-card {
   height: 120px;
@@ -243,7 +245,7 @@ export default defineComponent({
 }
 .ant-modal-content {
   border-radius: 10px !important;
-  height: 50vh;
+  height: 55vh;
 }
 .ant-modal-body {
   padding: 0 !important;
