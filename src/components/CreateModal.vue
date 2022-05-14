@@ -3,7 +3,6 @@
     <transition name="slide-fade">
       <a-button
         class="write-button"
-        type="primary"
         shape="circle"
         @click="showModal"
         v-if="!visible"
@@ -138,6 +137,8 @@ export default defineComponent({
     const resetText = () => {
       text.value = "";
       valid.value = true;
+      negative.value = false;
+      duplicate.value = false;
     };
     const checkValidText = async () => {
       let english = /^[\x20-\x7E\r\n]+$/;
