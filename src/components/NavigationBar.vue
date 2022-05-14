@@ -36,7 +36,6 @@
 </template>
 <script>
 import dayjs from "dayjs";
-import moment from "moment";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 dayjs.extend(isToday);
@@ -63,7 +62,7 @@ export default defineComponent({
 
     const disabledDate = (current) => {
       // Can not select days after today
-      return current > moment().endOf("day");
+      return current > dayjs().endOf("day");
     };
 
     const onClick = () => {
