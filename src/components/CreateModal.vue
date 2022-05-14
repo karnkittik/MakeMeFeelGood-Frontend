@@ -138,6 +138,8 @@ export default defineComponent({
     const resetText = () => {
       text.value = "";
       valid.value = true;
+      negative.value = false;
+      duplicate.value = false;
     };
     const checkValidText = async () => {
       let english = /^[\x20-\x7E\r\n]+$/;
