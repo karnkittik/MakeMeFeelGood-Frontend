@@ -22,7 +22,7 @@
     </div>
     <a-typography-paragraph
       v-if="type == 'top'"
-      :ellipsis="{ rows: 3, expandable: true, symbol: '⮐' }"
+      :ellipsis="{ rows: 4, expandable: true, symbol: 'more' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.1,
@@ -34,7 +34,7 @@
     />
     <a-typography-paragraph
       v-else
-      :ellipsis="{ rows: 3, expandable: true, symbol: '⮐' }"
+      :ellipsis="{ rows: 3, expandable: true, symbol: 'more' }"
       :content="message.text"
       v-resize-text="{
         ratio: 1.5,
@@ -190,7 +190,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .card:hover {

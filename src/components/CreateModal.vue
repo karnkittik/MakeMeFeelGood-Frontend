@@ -3,7 +3,6 @@
     <transition name="slide-fade">
       <a-button
         class="write-button"
-        type="primary"
         shape="circle"
         @click="showModal"
         v-if="!visible"

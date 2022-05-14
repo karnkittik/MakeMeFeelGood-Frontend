@@ -121,8 +121,12 @@ export default {
 }
 
 .top-10-pane {
-  background: blue;
+  background-image: url("../assets/background3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 80%;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .top-message {
