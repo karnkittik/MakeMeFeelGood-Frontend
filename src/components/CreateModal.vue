@@ -186,7 +186,6 @@ export default defineComponent({
 }
 .modal-guide {
   width: 45%;
-  min-height: 24vh;
   height: 100%;
   /* background: yellow; */
   border-radius: 8px;
@@ -198,7 +197,6 @@ export default defineComponent({
 }
 .modal-write {
   width: 55%;
-  min-height: 24vh;
   height: 100%;
   /* background: red; */
   border-radius: 8px;
