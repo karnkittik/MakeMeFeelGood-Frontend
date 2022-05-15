@@ -206,12 +206,14 @@ export default {
   display: flex;
   justify-content: end;
   align-items: center;
+  width: 100%;
 }
 
 .card-bottom-action-block {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .card-message {
