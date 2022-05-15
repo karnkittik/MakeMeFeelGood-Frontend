@@ -143,7 +143,7 @@ export default defineComponent({
   color: gray !important;
 }
 .ant-popover {
-  z-index: 0 !important;
+  z-index: 1 !important;
   position: fixed !important;
 }
 @media screen and (max-width: 576px) {

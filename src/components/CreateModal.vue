@@ -246,6 +246,7 @@ export default defineComponent({
 .ant-modal-content {
   border-radius: 10px !important;
   height: 55vh;
+  max-height: 450px;
 }
 .ant-modal-body {
   padding: 0 !important;
