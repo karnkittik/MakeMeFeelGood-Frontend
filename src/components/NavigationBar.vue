@@ -23,7 +23,10 @@
             <CalendarOutlined style="font-size: 20px; color: rgb(69, 16, 69)" />
           </template>
         </a-button>
-        <a-typography-title :level="4" class="my-text">
+        <a-typography-title :level="4" class="my-text large">
+          {{ formatDate }}
+        </a-typography-title>
+        <a-typography-title :level="5" class="my-text small">
           {{ formatDate }}
         </a-typography-title>
         <edit-outlined class="edit-icon" />
@@ -111,6 +114,9 @@ export default defineComponent({
   margin: 0 0 0 10px !important;
   font-weight: 500 !important;
 }
+.my-text.small {
+  display: none;
+}
 .logo-text {
   background: -webkit-linear-gradient(
     #03001e,
@@ -140,19 +146,23 @@ export default defineComponent({
   z-index: 0 !important;
   position: fixed !important;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 576px) {
   .calendar-button {
     width: 36px !important;
     height: 36px !important;
     display: none !important;
   }
-}
-@media screen and (max-width: 576px) {
+  .edit-icon {
+    display: inline-block !important;
+  }
   .my-text {
     margin: 0 5px 0 0 !important;
   }
-  .edit-icon {
-    display: inline-block !important;
+  .my-text.large {
+    display: none;
+  }
+  .my-text.small {
+    display: block;
   }
 }
 </style>
