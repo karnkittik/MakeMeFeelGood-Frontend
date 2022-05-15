@@ -111,11 +111,11 @@ export default defineComponent({
       visible.value = true;
     };
     const createMessage = async () => {
+      negative.value = false;
+      duplicate.value = false;
       await checkValidText();
       if (valid.value == true) {
         sending.value = true;
-        negative.value = false;
-        duplicate.value = false;
         axios
           .post(config.API, {
             message: text.value,
