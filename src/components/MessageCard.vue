@@ -144,6 +144,10 @@ export default {
   created() {
     let diff = (new Date().valueOf() - this.message.created_at) / 1000;
     var timeLeft = diff < 40 ? Math.ceil(40 - diff) : 0;
+    if (!timeLeft) {
+      this.soundAvailable = true;
+      return;
+    }
     var refreshIntervalId = setInterval(() => {
       if (!timeLeft) {
         this.soundAvailable = true;

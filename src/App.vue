@@ -132,16 +132,16 @@ export default {
   },
   mounted() {
     let tm = this.date.utc().startOf("day").valueOf();
-    this.getFakeMessages();
-    // this.getMessages(tm);
+    // this.getFakeMessages();
+    this.getMessages(tm);
   },
   watch: {
     date(newDate, oldDate) {
       if (!oldDate.isSame(newDate, "day")) {
         // console.log("Hey: ", this.date.toString());
         let tm = newDate.utc().startOf("day").valueOf();
-        // this.getMessages(tm);
-        this.getFakeMessages();
+        this.getMessages(tm);
+        // this.getFakeMessages();
       }
     },
   },

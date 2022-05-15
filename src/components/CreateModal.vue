@@ -2,14 +2,14 @@
   <div class="float-button">
     <transition name="slide-fade">
       <a-button
-        class="add-button"
+        class="write-button"
         type="primary"
         shape="circle"
         @click="showModal"
         v-if="!visible"
       >
         <template #icon>
-          <plus-outlined style="font-size: 20px" />
+          <form-outlined style="font-size: 20px" />
         </template>
       </a-button>
     </transition>
@@ -73,7 +73,7 @@
           v-model:value="text"
           show-count
           size="large"
-          :maxlength="80"
+          :maxlength="100"
           placeholder="Write here..."
         />
         <div class="post-bottom-block">
@@ -92,7 +92,7 @@
 </template>
 <script>
 import { defineComponent, ref } from "vue";
-import { PlusOutlined } from "@ant-design/icons-vue";
+import { FormOutlined } from "@ant-design/icons-vue";
 import axios from "axios";
 import config from "../config";
 export default defineComponent({
@@ -163,7 +163,7 @@ export default defineComponent({
     };
   },
   components: {
-    PlusOutlined,
+    FormOutlined,
   },
 });
 </script>
@@ -224,7 +224,7 @@ export default defineComponent({
   font-weight: bold !important;
   letter-spacing: 0.05em;
 }
-.add-button {
+.write-button {
   width: 54px !important;
   height: 54px !important;
   box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.25) !important;

@@ -68,6 +68,9 @@ export default defineComponent({
     const onClick = () => {
       showCalendar.value = !showCalendar.value;
       // console.log(date.value.toString());
+      if (date.value > dayjs().endOf("day")) {
+        date.value = dayjs();
+      }
       props.changeDate(date.value);
     };
 

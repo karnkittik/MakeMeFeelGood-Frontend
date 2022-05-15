@@ -1,3 +1,4 @@
 export default Object.freeze({
-  API: "http://localhost:8000/api/message",
+  API:
+    (import.meta.env.VITE_BACKEND || "http://localhost:8000/") + "api/message",
 });
