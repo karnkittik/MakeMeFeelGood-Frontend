@@ -131,7 +131,7 @@ export default {
     },
   },
   mounted() {
-    let tm = this.date.utc().startOf("day").valueOf();
+    let tm = this.date.startOf("day").valueOf();
     // this.getFakeMessages();
     this.getMessages(tm);
   },
@@ -139,7 +139,7 @@ export default {
     date(newDate, oldDate) {
       if (!oldDate.isSame(newDate, "day")) {
         // console.log("Hey: ", this.date.toString());
-        let tm = newDate.utc().startOf("day").valueOf();
+        let tm = newDate.startOf("day").valueOf();
         this.getMessages(tm);
         // this.getFakeMessages();
       }
