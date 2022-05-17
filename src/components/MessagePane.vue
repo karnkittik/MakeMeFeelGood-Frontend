@@ -44,7 +44,7 @@
   <a-row class="message-pane" :gutter="[12, 12]">
     <transition-group appear @before-enter="beforeEnter" @enter="enter">
       <a-col
-        v-for="(message, messageIndex) in messages.slice(6)"
+        v-for="(message, messageIndex) in messages.slice(5)"
         :key="messageIndex + 6"
         :xs="{ span: 24 }"
         :md="{ span: 8 }"
